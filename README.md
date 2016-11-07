@@ -61,7 +61,8 @@ To format it “properly”, i.e., as what people would normally see, is very ha
 
 So if the output format is so important to you, then unfortunately you have to go through decoding and encoding procedures. But there are some drawbacks as well, as put by James McGill, in http://stackoverflow.com/questions/21117161, besides such method being slow:
 
-> I like this solution, but am still in search of a Golang XML formatter/prettyprinter that doesn't rewrite the document (other than formatting whitespace). Marshalling or using the Encoder will change namespace declarations. For example an element like "< ns1:Element />" will be translated to something like '< Element xmlns="http://bla...bla/ns1" >< /Element >' which seems harmless enough except when the intent is to not alter the xml other than formatting. -- James McGill Nov 12 '15
+> I like this solution, but am still in search of a Golang XML formatter/prettyprinter that doesn't rewrite the document (other than formatting whitespace). Marshalling or using the Encoder will change namespace declarations.
+> For example an element like "< ns1:Element />" will be translated to something like '< Element xmlns="http://bla...bla/ns1" >< /Element >' which seems harmless enough except when the intent is to not alter the xml other than formatting. -- James McGill Nov 12 '15
 
 Using Sam's code as an example, 
 
@@ -100,7 +101,7 @@ into this:
 </Envelope>
 ```
 
-I know they are the same in syntax, however they look totally different.
+I know they are syntactically the same, however the problem is that they *look* totally different.
 
 That's why there is this package, an XML Beautifier that doesn't rewrite the document. 
 
