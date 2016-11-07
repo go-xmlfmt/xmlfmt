@@ -105,3 +105,5 @@ echo '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" xmlns:_xmlns="
     </Body>
   </Envelope>
 ```
+
+This package is a direct translate from above Perl code into Go.
