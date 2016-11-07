@@ -64,3 +64,44 @@ into this:
 I know they are the same in syntax, however they look totally different.
 
 That's why there is this package, an XML Beautifier that doesn't rewrite the document. 
+
+## Credit
+
+The credit goes to **diotalevi** from his post at http://www.perlmonks.org/?node_id=261292.
+
+However, it does not work for all cases. For example,
+
+```sh
+$ echo '<Envelope xmlns=http://schemas.xmlsoap.org/soap/envelope/ xmlns:_xmlns=xmlns _xmlns:soapenv=http://schemas.xmlsoap.org/soap/envelope/ _xmlns:ns=http://example.com/ns><Header xmlns=http://schemas.xmlsoap.org/soap/envelope/></Header><Body xmlns=http://schemas.xmlsoap.org/soap/envelope/><request xmlns=http://example.com/ns><customer xmlns=http://example.com/ns><id xmlns=http://example.com/ns>123</id><name xmlns=http://example.com/ns type=NCHZ>John Brown</name></customer></request></Body></Envelope>' | perl -pe 's/(?<=>)\s+(?=<)//g; s(<(/?)([^/>]+)(/?)>\s*(?=(</?))?)($indent+=$3?0:$1?-1:1;"<$1$2$3>".($1&&($4 eq"</")?"\n".("  "x$indent):$4?"\n".("  "x$indent):""))ge'
+```
+```xml
+<Envelope xmlns=http://schemas.xmlsoap.org/soap/envelope/ xmlns:_xmlns=xmlns _xmlns:soapenv=http://schemas.xmlsoap.org/soap/envelope/ _xmlns:ns=http://example.com/ns><Header xmlns=http://schemas.xmlsoap.org/soap/envelope/></Header>
+<Body xmlns=http://schemas.xmlsoap.org/soap/envelope/><request xmlns=http://example.com/ns><customer xmlns=http://example.com/ns><id xmlns=http://example.com/ns>123</id>
+<name xmlns=http://example.com/ns type=NCHZ>John Brown</name>
+</customer>
+</request>
+</Body>
+</Envelope>
+```
+
+I simplified the algorithm, and now it should work for all cases:
+
+```sh
+echo '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" xmlns:_xmlns="xmlns" _xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" _xmlns:ns="http://example.com/ns"><Header xmlns="http://schemas.xmlsoap.org/soap/envelope/"></Header><Body xmlns="http://schemas.xmlsoap.org/soap/envelope/"><request xmlns="http://example.com/ns"><customer xmlns="http://example.com/ns"><id xmlns="http://example.com/ns">123</id><name xmlns="http://example.com/ns" type="NCHZ">John Brown</name></customer></request></Body></Envelope>' | perl -pe 's/(?<=>)\s+(?=<)//g; s(<(/?)([^>]+)(/?)>)($indent+=$3?0:$1?-1:1;"<$1$2$3>"."\n".("  "x$indent))ge'
+```
+```xml
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" xmlns:_xmlns="xmlns" _xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" _xmlns:ns="http://example.com/ns">
+  <Header xmlns="http://schemas.xmlsoap.org/soap/envelope/">
+    </Header>
+  <Body xmlns="http://schemas.xmlsoap.org/soap/envelope/">
+    <request xmlns="http://example.com/ns">
+      <customer xmlns="http://example.com/ns">
+        <id xmlns="http://example.com/ns">
+          123</id>
+        <name xmlns="http://example.com/ns" type="NCHZ">
+          John Brown</name>
+        </customer>
+      </request>
+    </Body>
+  </Envelope>
+```
