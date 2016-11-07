@@ -4,6 +4,45 @@
 
 The Go XML Formatter, xmlfmt, will format the XML string in a readable way. 
 
+```go
+package main
+
+import "github.com/go-xmlfmt/xmlfmt"
+
+func main() {
+	xml1 := `<root><this><is>a</is><test /><message><org><cn>Some org-or-other</cn><ph>Wouldnt you like to know</ph></org><contact><fn>Pat</fn><ln>Califia</ln></contact></message></this></root>`
+	x := xmlfmt.FormatXML(xml1, "\t", "  ")
+	print(x)
+}
+
+```
+
+Output:
+
+```xml
+        <root>
+          <this>
+            <is>
+              a</is>
+            <test />
+              <message>
+                <org>
+                  <cn>
+                    Some org-or-other</cn>
+                  <ph>
+                    Wouldnt you like to know</ph>
+                  </org>
+                <contact>
+                  <fn>
+                    Pat</fn>
+                  <ln>
+                    Califia</ln>
+                  </contact>
+                </message>
+              </this>
+            </root>
+
+```
 There is no XML decoding and encoding involved, only pure regular expression matching and replacing. So it is much faster than going through decoding and encoding procedures. Moreover, the exact XML source string is preserved, instead of being changed by the encoder. This is why this package exists in the first place. 
 
 ## Justification
