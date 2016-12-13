@@ -1,5 +1,10 @@
 # Go XML Formatter
 
+[![MIT License](http://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Go Doc](https://img.shields.io/badge/godoc-reference-4b68a3.svg)](https://godoc.org/github.com/go-xmlfmt/xmlfmt)
+[![Go Report Card](https://goreportcard.com/badge/github.com/go-xmlfmt/xmlfmt)](https://goreportcard.com/report/github.com/go-xmlfmt/xmlfmt)
+[![Codeship Status](https://codeship.com/projects/c49f02b0-a384-0134-fb20-2e0351080565/status?branch=master)](https://codeship.com/projects/190297)
+
 ## Synopsis
 
 The Go XML Formatter, xmlfmt, will format the XML string in a readable way. 
@@ -25,24 +30,24 @@ Output:
             <is>
               a</is>
             <test />
-              <message>
-                <org>
-                  <cn>
-                    Some org-or-other</cn>
-                  <ph>
-                    Wouldnt you like to know</ph>
-                  </org>
-                <contact>
-                  <fn>
-                    Pat</fn>
-                  <ln>
-                    Califia</ln>
-                  </contact>
-                </message>
-              </this>
-            </root>
-
+            <message>
+              <org>
+                <cn>
+                  Some org-or-other</cn>
+                <ph>
+                  Wouldnt you like to know</ph>
+                </org>
+              <contact>
+                <fn>
+                  Pat</fn>
+                <ln>
+                  Califia</ln>
+                </contact>
+              </message>
+            </this>
+          </root>
 ```
+
 There is no XML decoding and encoding involved, only pure regular expression matching and replacing. So it is much faster than going through decoding and encoding procedures. Moreover, the exact XML source string is preserved, instead of being changed by the encoder. This is why this package exists in the first place. 
 
 ## Justification
