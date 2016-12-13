@@ -14,7 +14,7 @@ import (
 
 var (
 	reg = regexp.MustCompile(`<(/?)([^>]+)(/?)>`)
-	// NL is the newline string used in XML ouput, define for DOS-convenient.
+	// NL is the newline string used in XML output, define for DOS-convenient.
 	NL = "\r\n"
 )
 
