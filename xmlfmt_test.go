@@ -25,22 +25,22 @@ func Example_output() {
 	//     <is>
 	//       a</is>
 	//     <test />
-	//       <message>
-	//         <org>
-	//           <cn>
-	//             Some org-or-other</cn>
-	//           <ph>
-	//             Wouldnt you like to know</ph>
-	//           </org>
-	//         <contact>
-	//           <fn>
-	//             Pat</fn>
-	//           <ln>
-	//             Califia</ln>
-	//           </contact>
-	//         </message>
-	//       </this>
-	//     </root>
+	//     <message>
+	//       <org>
+	//         <cn>
+	//           Some org-or-other</cn>
+	//         <ph>
+	//           Wouldnt you like to know</ph>
+	//         </org>
+	//       <contact>
+	//         <fn>
+	//           Pat</fn>
+	//         <ln>
+	//           Califia</ln>
+	//         </contact>
+	//       </message>
+	//     </this>
+	//   </root>
 	//
 }
 
@@ -49,38 +49,38 @@ const w1 = `..<root>
 ..    <is>
 ..      a</is>
 ..    <test />
-..      <message>
-..        <org>
-..          <cn>
-..            Some org-or-other</cn>
-..          <ph>
-..            Wouldnt you like to know</ph>
-..          </org>
-..        <contact>
-..          <fn>
-..            Pat</fn>
-..          <ln>
-..            Califia</ln>
-..          </contact>
-..        </message>
-..      </this>
-..    </root>
-..  `
+..    <message>
+..      <org>
+..        <cn>
+..          Some org-or-other</cn>
+..        <ph>
+..          Wouldnt you like to know</ph>
+..        </org>
+..      <contact>
+..        <fn>
+..          Pat</fn>
+..        <ln>
+..          Califia</ln>
+..        </contact>
+..      </message>
+..    </this>
+..  </root>
+..`
 
 const w2 = `x <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://example.com/ns">
 x  <soapenv:Header/>
-x   <soapenv:Body>
-x    <ns:request>
-x     <ns:customer>
-x      <ns:id>
-x       123</ns:id>
-x      <ns:name type="NCHZ">
-x       John Brown</ns:name>
-x      </ns:customer>
-x     </ns:request>
-x    </soapenv:Body>
-x   </soapenv:Envelope>
-x  `
+x  <soapenv:Body>
+x   <ns:request>
+x    <ns:customer>
+x     <ns:id>
+x      123</ns:id>
+x     <ns:name type="NCHZ">
+x      John Brown</ns:name>
+x     </ns:customer>
+x    </ns:request>
+x   </soapenv:Body>
+x  </soapenv:Envelope>
+x `
 
 const w3 = `<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" xmlns:_xmlns="xmlns" _xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" _xmlns:ns="http://example.com/ns">
  <Header xmlns="http://schemas.xmlsoap.org/soap/envelope/">
