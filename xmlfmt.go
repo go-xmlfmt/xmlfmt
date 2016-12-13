@@ -18,7 +18,7 @@ var (
 	NL = "\r\n"
 )
 
-// FormatXML will format the XML string in a readable way
+// FormatXML will (purly) reformat the XML string in a readable way, without any rewriting/altering the structure
 func FormatXML(xmls, prefix, indent string) string {
 	src := regexp.MustCompile(`>\s+<`).ReplaceAllString(xmls, "><")
 

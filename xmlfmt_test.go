@@ -1,6 +1,7 @@
 package xmlfmt_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/go-xmlfmt/xmlfmt"
@@ -12,13 +13,35 @@ const xml2 = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/e
 
 const xml3 = `<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" xmlns:_xmlns="xmlns" _xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" _xmlns:ns="http://example.com/ns"><Header xmlns="http://schemas.xmlsoap.org/soap/envelope/"></Header><Body xmlns="http://schemas.xmlsoap.org/soap/envelope/"><request xmlns="http://example.com/ns"><customer xmlns="http://example.com/ns"><id xmlns="http://example.com/ns">123</id><name xmlns="http://example.com/ns" type="NCHZ">John Brown</name></customer></request></Body></Envelope>`
 
-func Example() {
-	x1 := xmlfmt.FormatXML(xml1, "\t", "  ")
+func Example_output() {
+	x3 := xmlfmt.FormatXML(xml3, "\t", " ")
 	x2 := xmlfmt.FormatXML(xml2, "x ", " ")
-	x3 := xmlfmt.FormatXML(xml3, "", " ")
-	_ = x1
 	_ = x2
 	_ = x3
+	x1 := xmlfmt.FormatXML(xml1, "", "  ")
+	fmt.Println(x1)
+	// Output: <root>
+	//   <this>
+	//     <is>
+	//       a</is>
+	//     <test />
+	//       <message>
+	//         <org>
+	//           <cn>
+	//             Some org-or-other</cn>
+	//           <ph>
+	//             Wouldnt you like to know</ph>
+	//           </org>
+	//         <contact>
+	//           <fn>
+	//             Pat</fn>
+	//           <ln>
+	//             Califia</ln>
+	//           </contact>
+	//         </message>
+	//       </this>
+	//     </root>
+	//
 }
 
 const w1 = `..<root>
