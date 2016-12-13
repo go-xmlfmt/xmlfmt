@@ -50,6 +50,27 @@ Output:
 
 There is no XML decoding and encoding involved, only pure regular expression matching and replacing. So it is much faster than going through decoding and encoding procedures. Moreover, the exact XML source string is preserved, instead of being changed by the encoder. This is why this package exists in the first place. 
 
+## Command
+
+To use it on command line, check out [xmlfmt](https://github.com/AntonioSun/xmlfmt):
+
+
+```
+$ xmlfmt 
+XML Formatter
+built on 2016-12-12
+
+The xmlfmt will format the XML string without rewriting the document
+
+Options:
+
+  -h, --help          display help information
+  -f, --file         *The xml file to read from (or stdin)
+  -p, --prefix        each element begins on a new line and this prefix
+  -i, --indent[=  ]   indent string for nested elements
+```
+
+
 ## Justification
 
 ### The format
