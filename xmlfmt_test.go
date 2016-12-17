@@ -7,7 +7,7 @@ import (
 	"github.com/go-xmlfmt/xmlfmt"
 )
 
-const xml1 = `<root><this><is>a</is><test /><message><org><cn>Some org-or-other</cn><ph>Wouldnt you like to know</ph></org><contact><fn>Pat</fn><ln>Califia</ln></contact></message></this></root>`
+const xml1 = `<root><this><is>a</is><test /><message><!-- with comment --><org><cn>Some org-or-other</cn><ph>Wouldnt you like to know</ph></org><contact><fn>Pat</fn><ln>Califia</ln></contact></message></this></root>`
 
 const xml2 = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://example.com/ns"><soapenv:Header/><soapenv:Body><ns:request><ns:customer><ns:id>123</ns:id><ns:name type="NCHZ">John Brown</ns:name></ns:customer></ns:request></soapenv:Body></soapenv:Envelope>`
 
@@ -26,6 +26,7 @@ func Example_output() {
 	//       a</is>
 	//     <test />
 	//     <message>
+	//       <!-- with comment -->
 	//       <org>
 	//         <cn>
 	//           Some org-or-other</cn>
@@ -50,6 +51,7 @@ const w1 = `..<root>
 ..      a</is>
 ..    <test />
 ..    <message>
+..      <!-- with comment -->
 ..      <org>
 ..        <cn>
 ..          Some org-or-other</cn>
