@@ -31,21 +31,27 @@ func FormatXML(xmls, prefix, indent string) string {
 func replaceTag(prefix, indent string) func(string) string {
 	indentLevel := 0
 	return func(m string) string {
-		parts := reg.FindStringSubmatch(m)
-		// $3: A <foo/> tag. No alteration to indentation.
-		// $1: A closing </foo> tag. Drop one indentation level
-		// else: An opening <foo> tag. Increase one indentation level
-		if len(parts[3]) == 0 {
-			//print("] " + parts[1] + "-" + parts[3] + ".\n")
-			if parts[1] == `/` {
-				indentLevel--
-			} else if parts[1] != `!` {
-				indentLevel++
-			}
-		} //else {
-		//print("] " + parts[1] + parts[2] + parts[3])
-		//}
-		return "<" + parts[1] + parts[2] + parts[3] + ">" +
-			NL + prefix + strings.Repeat(indent, indentLevel)
+		// head elem
+		if strings.HasPrefix(m, "<?xml") {
+			return NL + prefix + strings.Repeat(indent, indentLevel) + m
+		}
+		// empty elem
+		if strings.HasSuffix(m, "/>") {
+			return NL + prefix + strings.Repeat(indent, indentLevel) + m
+		}
+		// comment elem
+		if strings.HasPrefix(m, "<!") {
+			return NL + prefix + strings.Repeat(indent, indentLevel) + m
+		}
+		// end elem
+		if strings.HasPrefix(m, "</") {
+			indentLevel--
+			return NL + prefix + strings.Repeat(indent, indentLevel) + m
+		}
+		defer func() {
+			indentLevel++
+		}()
+
+		return NL + prefix + strings.Repeat(indent, indentLevel) + m
 	}
 }
