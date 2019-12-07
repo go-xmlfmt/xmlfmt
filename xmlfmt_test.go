@@ -124,3 +124,38 @@ func TestFormatXML_t3(t *testing.T) {
 		t.Errorf("got:\n%s, want:\n%s.", x3, w3)
 	}
 }
+
+////////////////////////////////////////////////////////////////////////////
+// Benchmarking
+
+/*
+BenchmarkFormatXML show compare metrics between different xml strings.
+*/
+func BenchmarkFormatXML(b *testing.B) {
+	for _, size := range []int{1, 10, 100, 1000, 10000, 100000} { // , 1000000
+		benchmarkFormatXML(b, size)
+	}
+}
+
+func benchmarkFormatXML(b *testing.B, size int) {
+	b.Run(fmt.Sprintf("XML1_%d", size), func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			x := xmlfmt.FormatXML(xml1, "..", "  ")
+			_ = x
+		}
+	})
+
+	b.Run(fmt.Sprintf("XML2_%d", size), func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			x := xmlfmt.FormatXML(xml2, "x ", " ")
+			_ = x
+		}
+	})
+
+	b.Run(fmt.Sprintf("XML3_%d", size), func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			x := xmlfmt.FormatXML(xml3, "", " ")
+			_ = x
+		}
+	})
+}
