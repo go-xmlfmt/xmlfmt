@@ -1,8 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////
-// Porgram: xml-beautify-regexp.go
-// Purpose: Go XML Beautify from XML string using pure regexp
-// Authors: Antonio Sun (c) 2016, All rights reserved
-// Credits: diotalevi http://www.perlmonks.org/?node_id=261292
+// Porgram: xmlfmt.go
+// Purpose: Go XML Beautify from XML string using pure string manipulation
+// Authors: Antonio Sun (c) 2016-2019, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 package xmlfmt
@@ -20,7 +19,7 @@ var (
 
 // FormatXML will (purly) reformat the XML string in a readable way, without any rewriting/altering the structure
 func FormatXML(xmls, prefix, indent string) string {
-	src := regexp.MustCompile(`>\s+<`).ReplaceAllString(xmls, "><")
+	src := regexp.MustCompile(`(?s)>\s+<`).ReplaceAllString(xmls, "><")
 
 	rf := replaceTag(prefix, indent)
 	return (prefix + reg.ReplaceAllStringFunc(src, rf))
