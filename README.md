@@ -25,27 +25,28 @@ func main() {
 Output:
 
 ```xml
-        <root>
-          <this>
-            <is>
-              a</is>
-            <test />
-            <message>
-              <org>
-                <cn>
-                  Some org-or-other</cn>
-                <ph>
-                  Wouldnt you like to know</ph>
-                </org>
-              <contact>
-                <fn>
-                  Pat</fn>
-                <ln>
-                  Califia</ln>
-                </contact>
-              </message>
-            </this>
-          </root>
+	<root>
+	  <this>
+	    <is>a
+	    </is>
+	    <test />
+	    <message>
+	      <!-- with comment -->
+	      <org>
+	        <cn>Some org-or-other
+	        </cn>
+	        <ph>Wouldnt you like to know
+	        </ph>
+	      </org>
+	      <contact>
+	        <fn>Pat
+	        </fn>
+	        <ln>Califia
+	        </ln>
+	      </contact>
+	    </message>
+	  </this>
+	</root>
 ```
 
 There is no XML decoding and encoding involved, only pure regular expression matching and replacing. So it is much faster than going through decoding and encoding procedures. Moreover, the exact XML source string is preserved, instead of being changed by the encoder. This is why this package exists in the first place. 
@@ -58,7 +59,7 @@ To use it on command line, check out [xmlfmt](https://github.com/AntonioSun/xmlf
 ```
 $ xmlfmt 
 XML Formatter
-built on 2016-12-12
+built on 2019-12-08
 
 The xmlfmt will format the XML string without rewriting the document
 
@@ -173,4 +174,5 @@ echo '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" xmlns:_xmlns="
   </Envelope>
 ```
 
-This package is a direct translate from above Perl code into Go.
+This package is a direct translate from above Perl code into Go,
+then further enhanced by @ruandao.
