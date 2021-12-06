@@ -144,6 +144,47 @@ func TestFormatXML_t4(t *testing.T) {
 	}
 }
 
+const xmlc1 = `
+<book> <author>Fred</author>
+<!--
+<price>20</price><currency>USD</currency>
+-->
+ <isbn>23456</isbn> </book>
+<!-- c1 --> <?xml version="1.0" encoding="utf-8"?> <message name="DIS_USER_SSVC" tid="1591918441"> <!-- c2 --> <Result>0</Result> <parameter> <SsvcList> <!-- c3 --> <CFU>2</CFU> <!-- c4 --> <!-- <DATA>0261216281</DATA> --> </SsvcList> </parameter> </message>`
+const wc1 = `
+
+<book>
+  <author>Fred
+  </author>
+  <!-- <price>20</price><currency>USD</currency> -->
+  <isbn>23456
+  </isbn>
+</book>
+<!-- c1 -->
+<?xml version="1.0" encoding="utf-8"?>
+<message name="DIS_USER_SSVC" tid="1591918441">
+  <!-- c2 -->
+  <Result>0
+  </Result>
+  <parameter>
+    <SsvcList>
+      <!-- c3 -->
+      <CFU>2
+      </CFU>
+      <!-- c4 -->
+      <!-- <DATA>0261216281</DATA> -->
+    </SsvcList>
+  </parameter>
+</message>`
+
+func TestFormatXML_comments_t1(t *testing.T) {
+	x1 := xmlfmt.FormatXML(xmlc1, "", "  ", true)
+	if x1 != wc1 {
+		t.Errorf("got:\n%s, want:\n%s.", x1, wc1)
+	}
+}
+
+
 ////////////////////////////////////////////////////////////////////////////
 // Benchmarking
 
