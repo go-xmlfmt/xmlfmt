@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////
 // Porgram: xmlfmt.go
 // Purpose: Go XML Beautify from XML string using pure string manipulation
-// Authors: Antonio Sun (c) 2016-2021, All rights reserved
+// Authors: Antonio Sun (c) 2016-2022, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 package xmlfmt
@@ -9,14 +9,22 @@ package xmlfmt
 import (
 	"html"
 	"regexp"
+	"runtime"
 	"strings"
 )
 
 var (
 	reg = regexp.MustCompile(`<([/!]?)([^>]+?)(/?)>`)
-	// NL is the newline string used in XML output, define for DOS-convenient.
-	NL = "\r\n"
+	// NL is the newline string used in XML output.
+	NL = "\n"
 )
+
+func init() {
+	// define NL for Windows
+	if runtime.GOOS == "windows" {
+		NL = "\r\n"
+	}
+}
 
 // FormatXML will (purly) reformat the XML string in a readable way, without any rewriting/altering the structure.
 // If your XML Comments have nested tags in them, or you're not 100% sure otherwise, pass `true` as the third parameter to this function. But don't turn it on blindly, as the code has become ten times more complicated because of it.
