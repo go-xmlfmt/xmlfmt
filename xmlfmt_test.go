@@ -98,18 +98,18 @@ const w4 = `
  <Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="ppt/presentation.xml"/>
 </Relationships>`
 
-const w5 = `
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://example.com/ns">
- <soapenv:Header/>
- <soapenv:Body>
-  <ns:request>
-   <ns:customer>
-    <ns:id>123</ns:id>
-    <ns:name type="NCHZ">John Brown super long super long super long super long super long super long super long super longlong super long super long super long super long super long super long super longlong super long super long super long super long super long super long super long</ns:name>
-   </ns:customer>
-  </ns:request>
- </soapenv:Body>
-</soapenv:Envelope>`
+const w5 = `x 
+x <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://example.com/ns">
+x  <soapenv:Header/>
+x  <soapenv:Body>
+x   <ns:request>
+x    <ns:customer>
+x     <ns:id>123</ns:id>
+x     <ns:name type="NCHZ">John Brown super long super long super long super long super long super long super long super longlong super long super long super long super long super long super long super longlong super long super long super long super long super long super long super long</ns:name>
+x    </ns:customer>
+x   </ns:request>
+x  </soapenv:Body>
+x </soapenv:Envelope>`
 
 func TestFormatXML_t0(t *testing.T) {
 	xmlfmt.NL = "\n"
@@ -144,7 +144,7 @@ func TestFormatXML_t4(t *testing.T) {
 }
 
 func TestFormatXML_t5(t *testing.T) {
-	x5 := xmlfmt.FormatXML(xml5, "", " ")
+	x5 := xmlfmt.FormatXML(xml5, "x ", " ")
 	if x5 != w5 {
 		t.Errorf("got:\n%s, want:\n%s.", x5, w5)
 	}
