@@ -1,8 +1,9 @@
-package xmlfmt
+package xmlfmt_test
 
 import (
 	"fmt"
 	"testing"
+	"xmlfmt"
 )
 
 const xml1 = `<root><this><is>a</is><test /><message><!-- with comment --><org><cn>Some org-or-other</cn><ph>Wouldnt you like to know</ph></org><contact><fn>Pat</fn><ln>Califia</ln></contact></message></this></root>`
@@ -15,13 +16,33 @@ const xml4 = `<?xml version="1.0" encoding="UTF-8">
 
   <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/><Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="ppt/presentation.xml"/></Relationships>`
 
+const xml5 = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://example.com/ns"><soapenv:Header/><soapenv:Body><ns:request><ns:customer><ns:id>123</ns:id><ns:name type="NCHZ">John Brown super long super long super long super long super long super long super long super longlong super long super long super long super long super long super long super longlong super long super long super long super long super long super long super long</ns:name></ns:customer></ns:request></soapenv:Body></soapenv:Envelope>`
+
 func Example_output() {
-	x3 := FormatXML(xml3, "\t", " ")
-	x2 := FormatXML(xml2, "x ", " ")
+	x3 := xmlfmt.FormatXML(xml3, "\t", " ")
+	x2 := xmlfmt.FormatXML(xml2, "x ", " ")
 	_ = x2
 	_ = x3
-	x1 := FormatXML(xml1, "", "  ")
+	x1 := xmlfmt.FormatXML(xml1, "", "  ")
 	fmt.Println(x1)
+	// Output:
+	// <root>
+	//   <this>
+	//     <is>a</is>
+	//     <test />
+	//     <message>
+	//       <!-- with comment -->
+	//       <org>
+	//         <cn>Some org-or-other</cn>
+	//         <ph>Wouldnt you like to know</ph>
+	//       </org>
+	//       <contact>
+	//         <fn>Pat</fn>
+	//         <ln>Califia</ln>
+	//       </contact>
+	//     </message>
+	//   </this>
+	// </root>
 }
 
 const w1 = `..
@@ -77,35 +98,55 @@ const w4 = `
  <Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="ppt/presentation.xml"/>
 </Relationships>`
 
+const w5 = `
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://example.com/ns">
+ <soapenv:Header/>
+ <soapenv:Body>
+  <ns:request>
+   <ns:customer>
+    <ns:id>123</ns:id>
+    <ns:name type="NCHZ">John Brown super long super long super long super long super long super long super long super longlong super long super long super long super long super long super long super longlong super long super long super long super long super long super long super long</ns:name>
+   </ns:customer>
+  </ns:request>
+ </soapenv:Body>
+</soapenv:Envelope>`
+
 func TestFormatXML_t0(t *testing.T) {
-	NL = "\n"
+	xmlfmt.NL = "\n"
 }
 
 func TestFormatXML_t1(t *testing.T) {
-	x1 := FormatXML(xml1, "..", "  ")
+	x1 := xmlfmt.FormatXML(xml1, "..", "  ")
 	if x1 != w1 {
 		t.Errorf("got:\n%s, want:\n%s.", x1, w1)
 	}
 }
 
 func TestFormatXML_t2(t *testing.T) {
-	x2 := FormatXML(xml2, "x ", " ")
+	x2 := xmlfmt.FormatXML(xml2, "x ", " ")
 	if x2 != w2 {
 		t.Errorf("got:\n%s, want:\n%s.", x2, w2)
 	}
 }
 
 func TestFormatXML_t3(t *testing.T) {
-	x3 := FormatXML(xml3, "", " ")
+	x3 := xmlfmt.FormatXML(xml3, "", " ")
 	if x3 != w3 {
 		t.Errorf("got:\n%s, want:\n%s.", x3, w3)
 	}
 }
 
 func TestFormatXML_t4(t *testing.T) {
-	x4 := FormatXML(xml4, "", " ")
+	x4 := xmlfmt.FormatXML(xml4, "", " ")
 	if x4 != w4 {
 		t.Errorf("got:\n%s, want:\n%s.", x4, w4)
+	}
+}
+
+func TestFormatXML_t5(t *testing.T) {
+	x5 := xmlfmt.FormatXML(xml5, "", " ")
+	if x5 != w5 {
+		t.Errorf("got:\n%s, want:\n%s.", x5, w5)
 	}
 }
 
@@ -139,7 +180,7 @@ const wc1 = `
 </message>`
 
 func TestFormatXML_comments_t1(t *testing.T) {
-	x1 := FormatXML(xmlc1, "", "  ", true)
+	x1 := xmlfmt.FormatXML(xmlc1, "", "  ", true)
 	if x1 != wc1 {
 		t.Errorf("got:\n%s, want:\n%s.", x1, wc1)
 	}
@@ -160,21 +201,21 @@ func BenchmarkFormatXML(b *testing.B) {
 func benchmarkFormatXML(b *testing.B, size int) {
 	b.Run(fmt.Sprintf("XML1_%d", size), func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
-			x := FormatXML(xml1, "..", "  ")
+			x := xmlfmt.FormatXML(xml1, "..", "  ")
 			_ = x
 		}
 	})
 
 	b.Run(fmt.Sprintf("XML2_%d", size), func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
-			x := FormatXML(xml2, "x ", " ")
+			x := xmlfmt.FormatXML(xml2, "x ", " ")
 			_ = x
 		}
 	})
 
 	b.Run(fmt.Sprintf("XML3_%d", size), func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
-			x := FormatXML(xml3, "", " ")
+			x := xmlfmt.FormatXML(xml3, "", " ")
 			_ = x
 		}
 	})
