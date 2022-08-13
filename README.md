@@ -35,22 +35,17 @@ Output:
 ```xml
 	<root>
 	  <this>
-	    <is>a
-	    </is>
+	    <is>a</is>
 	    <test />
 	    <message>
 	      <!-- with comment -->
 	      <org>
-	        <cn>Some org-or-other
-	        </cn>
-	        <ph>Wouldnt you like to know
-	        </ph>
+	        <cn>Some org-or-other</cn>
+	        <ph>Wouldnt you like to know</ph>
 	      </org>
 	      <contact>
-	        <fn>Pat
-	        </fn>
-	        <ln>Califia
-	        </ln>
+	        <fn>Pat</fn>
+	        <ln>Califia</ln>
 	      </contact>
 	    </message>
 	  </this>
@@ -58,11 +53,9 @@ Output:
 
 
 <book>
-  <author>Fred
-  </author>
+  <author>Fred</author>
   <!-- <price>20</price><currency>USD</currency> -->
-  <isbn>23456
-  </isbn>
+  <isbn>23456</isbn>
 </book>
 ```
 
@@ -111,22 +104,17 @@ $ curl -sL https://pastebin.com/raw/z3euQ5PR | xmlfmt -f -
 
 <root>
   <this>
-    <is>a
-    </is>
+    <is>a</is>
     <test />
     <message>
       <!-- with comment -->
       <org>
-        <cn>Some org-or-other
-        </cn>
-        <ph>Wouldnt you like to know
-        </ph>
+        <cn>Some org-or-other</cn>
+        <ph>Wouldnt you like to know</ph>
       </org>
       <contact>
-        <fn>Pat
-        </fn>
-        <ln>Califia
-        </ln>
+        <fn>Pat</fn>
+        <ln>Califia</ln>
       </contact>
     </message>
   </this>
@@ -135,22 +123,18 @@ $ curl -sL https://pastebin.com/raw/z3euQ5PR | xmlfmt -f -
 $ curl -sL https://pastebin.com/raw/Zs0qy0qz | tee /tmp/xmlfmt.xml | xmlfmt -f - -n
 
 <book>
-  <author>Fred
-  </author>
+  <author>Fred</author>
   <!-- <price>20</price><currency>USD</currency> -->
-  <isbn>23456
-  </isbn>
+  <isbn>23456</isbn>
 </book>
 
 $ XMLFMT_NESTED=true XMLFMT_PREFIX='|' xmlfmt -f /tmp/xmlfmt.xml
 
 |
 |<book>
-|  <author>Fred
-|  </author>
+|  <author>Fred</author>
 |  <!-- <price>20</price><currency>USD</currency> -->
-|  <isbn>23456
-|  </isbn>
+|  <isbn>23456</isbn>
 |</book>
 ```
 

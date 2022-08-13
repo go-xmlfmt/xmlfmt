@@ -3,8 +3,7 @@ package xmlfmt_test
 import (
 	"fmt"
 	"testing"
-
-	"github.com/go-xmlfmt/xmlfmt"
+	"xmlfmt"
 )
 
 const xml1 = `<root><this><is>a</is><test /><message><!-- with comment --><org><cn>Some org-or-other</cn><ph>Wouldnt you like to know</ph></org><contact><fn>Pat</fn><ln>Califia</ln></contact></message></this></root>`
@@ -17,6 +16,8 @@ const xml4 = `<?xml version="1.0" encoding="UTF-8">
 
   <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/><Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="ppt/presentation.xml"/></Relationships>`
 
+const xml5 = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://example.com/ns"><soapenv:Header/><soapenv:Body><ns:request><ns:customer><ns:id>123</ns:id><ns:name type="NCHZ">John Brown super long super long super long super long super long super long super long super longlong super long super long super long super long super long super long super longlong super long super long super long super long super long super long super long</ns:name></ns:customer></ns:request></soapenv:Body></soapenv:Envelope>`
+
 func Example_output() {
 	x3 := xmlfmt.FormatXML(xml3, "\t", " ")
 	x2 := xmlfmt.FormatXML(xml2, "x ", " ")
@@ -27,22 +28,17 @@ func Example_output() {
 	// Output:
 	// <root>
 	//   <this>
-	//     <is>a
-	//     </is>
+	//     <is>a</is>
 	//     <test />
 	//     <message>
 	//       <!-- with comment -->
 	//       <org>
-	//         <cn>Some org-or-other
-	//         </cn>
-	//         <ph>Wouldnt you like to know
-	//         </ph>
+	//         <cn>Some org-or-other</cn>
+	//         <ph>Wouldnt you like to know</ph>
 	//       </org>
 	//       <contact>
-	//         <fn>Pat
-	//         </fn>
-	//         <ln>Califia
-	//         </ln>
+	//         <fn>Pat</fn>
+	//         <ln>Califia</ln>
 	//       </contact>
 	//     </message>
 	//   </this>
@@ -52,22 +48,17 @@ func Example_output() {
 const w1 = `..
 ..<root>
 ..  <this>
-..    <is>a
-..    </is>
+..    <is>a</is>
 ..    <test />
 ..    <message>
 ..      <!-- with comment -->
 ..      <org>
-..        <cn>Some org-or-other
-..        </cn>
-..        <ph>Wouldnt you like to know
-..        </ph>
+..        <cn>Some org-or-other</cn>
+..        <ph>Wouldnt you like to know</ph>
 ..      </org>
 ..      <contact>
-..        <fn>Pat
-..        </fn>
-..        <ln>Califia
-..        </ln>
+..        <fn>Pat</fn>
+..        <ln>Califia</ln>
 ..      </contact>
 ..    </message>
 ..  </this>
@@ -79,10 +70,8 @@ x  <soapenv:Header/>
 x  <soapenv:Body>
 x   <ns:request>
 x    <ns:customer>
-x     <ns:id>123
-x     </ns:id>
-x     <ns:name type="NCHZ">John Brown
-x     </ns:name>
+x     <ns:id>123</ns:id>
+x     <ns:name type="NCHZ">John Brown</ns:name>
 x    </ns:customer>
 x   </ns:request>
 x  </soapenv:Body>
@@ -90,15 +79,12 @@ x </soapenv:Envelope>`
 
 const w3 = `
 <Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" xmlns:_xmlns="xmlns" _xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" _xmlns:ns="http://example.com/ns">
- <Header xmlns="http://schemas.xmlsoap.org/soap/envelope/">
- </Header>
+ <Header xmlns="http://schemas.xmlsoap.org/soap/envelope/"></Header>
  <Body xmlns="http://schemas.xmlsoap.org/soap/envelope/">
   <request xmlns="http://example.com/ns">
    <customer xmlns="http://example.com/ns">
-    <id xmlns="http://example.com/ns">123
-    </id>
-    <name xmlns="http://example.com/ns" type="NCHZ">John Brown
-    </name>
+    <id xmlns="http://example.com/ns">123</id>
+    <name xmlns="http://example.com/ns" type="NCHZ">John Brown</name>
    </customer>
   </request>
  </Body>
@@ -111,6 +97,19 @@ const w4 = `
  <Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/>
  <Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="ppt/presentation.xml"/>
 </Relationships>`
+
+const w5 = `x 
+x <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://example.com/ns">
+x  <soapenv:Header/>
+x  <soapenv:Body>
+x   <ns:request>
+x    <ns:customer>
+x     <ns:id>123</ns:id>
+x     <ns:name type="NCHZ">John Brown super long super long super long super long super long super long super long super longlong super long super long super long super long super long super long super longlong super long super long super long super long super long super long super long</ns:name>
+x    </ns:customer>
+x   </ns:request>
+x  </soapenv:Body>
+x </soapenv:Envelope>`
 
 func TestFormatXML_t0(t *testing.T) {
 	xmlfmt.NL = "\n"
@@ -144,6 +143,13 @@ func TestFormatXML_t4(t *testing.T) {
 	}
 }
 
+func TestFormatXML_t5(t *testing.T) {
+	x5 := xmlfmt.FormatXML(xml5, "x ", " ")
+	if x5 != w5 {
+		t.Errorf("got:\n%s, want:\n%s.", x5, w5)
+	}
+}
+
 const xmlc1 = `
 <book> <author>Fred</author>
 <!--
@@ -154,23 +160,19 @@ const xmlc1 = `
 const wc1 = `
 
 <book>
-  <author>Fred
-  </author>
+  <author>Fred</author>
   <!-- <price>20</price><currency>USD</currency> -->
-  <isbn>23456
-  </isbn>
+  <isbn>23456</isbn>
 </book>
 <!-- c1 -->
 <?xml version="1.0" encoding="utf-8"?>
 <message name="DIS_USER_SSVC" tid="1591918441">
   <!-- c2 -->
-  <Result>0
-  </Result>
+  <Result>0</Result>
   <parameter>
     <SsvcList>
       <!-- c3 -->
-      <CFU>2
-      </CFU>
+      <CFU>2</CFU>
       <!-- c4 -->
       <!-- <DATA>0261216281</DATA> -->
     </SsvcList>
@@ -183,7 +185,6 @@ func TestFormatXML_comments_t1(t *testing.T) {
 		t.Errorf("got:\n%s, want:\n%s.", x1, wc1)
 	}
 }
-
 
 ////////////////////////////////////////////////////////////////////////////
 // Benchmarking
