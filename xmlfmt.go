@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////
-// Porgram: xmlfmt.go
+// Program: xmlfmt.go
 // Purpose: Go XML Beautify from XML string using pure string manipulation
 // Authors: Antonio Sun (c) 2016-2022, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
@@ -29,7 +29,7 @@ func init() {
 	}
 }
 
-// FormatXML will (purly) reformat the XML string in a readable way, without any rewriting/altering the structure.
+// FormatXML will (purely) reformat the XML string in a readable way, without any rewriting/altering the structure.
 // If your XML Comments have nested tags in them, or you're not 100% sure otherwise, pass `true` as the third parameter to this function. But don't turn it on blindly, as the code has become ten times more complicated because of it.
 func FormatXML(xmls, prefix, indent string, nestedTagsInComments ...bool) string {
 	nestedTagsInComment := false
